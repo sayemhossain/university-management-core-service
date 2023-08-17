@@ -10,7 +10,98 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id   String @id @default(uuid())
-  name String
+//Creating academic semester model
+model AcademicSemester {
+  id         String    @id @default(uuid())
+  year       String
+  title      String
+  code       String
+  startMonth String
+  endMonth   String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  students   Student[]
+
+  @@map("academic_semesters")
+}
+
+//Creating academic faculty model
+model AcademicFaculty {
+  id                  String               @id @default(uuid())
+  titile              String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  academicDepartments AcademicDepartment[]
+  students            Student[]
+  faculties           Faculty[]
+
+  @@map("academic_faculty")
+}
+
+//Creating academic department model
+model AcademicDepartment {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  academicFacultyId String
+  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
+
+  students  Student[]
+  faculties Faculty[]
+
+  @@map("academic_departments")
+}
+
+//Creating student model
+model Student {
+  id           String   @id @default(uuid())
+  studentId    String
+  firstName    String
+  lastName     String
+  middleName   String
+  profileImage String
+  email        String
+  contactNo    Int
+  gender       String
+  bloodGroup   String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  academicSemesterId String
+  academicSemester   AcademicSemester @relation(fields: [academicSemesterId], references: [id])
+
+  academicDepartmentId String
+  academicDepartment   AcademicDepartment @relation(fields: [academicDepartmentId], references: [id])
+
+  academicFacultyId String
+  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
+
+  @@map("students")
+}
+
+//Creating faculty model
+model Faculty {
+  id           String   @id @default(uuid())
+  facultyId    String
+  firstName    String
+  lastName     String
+  middleName   String
+  profileImage String
+  email        String
+  contactNo    Int
+  gender       String
+  bloodGroup   String
+  designation  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  academicDepartmentId String
+  academicDepartment   AcademicDepartment @relation(fields: [academicDepartmentId], references: [id])
+
+  academicFacultyId String
+  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
+
+  @@map("faculties")
 }
