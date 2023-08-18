@@ -10,4 +10,6 @@ export const AcademicSemesterFilterableFields = [
   'title',
   'code',
   'year',
+  'startMonth',
+  'endMonth',
 ];
