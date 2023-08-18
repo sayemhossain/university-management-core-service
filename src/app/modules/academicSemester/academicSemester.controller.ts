@@ -40,4 +40,23 @@ const getAllSemester = catchAsync(
   }
 );
 
-export const AcademicSemesterController = { insertIntoDB, getAllSemester };
+const getSingleSemester = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await AcademicSemesterService.getSingleSemesterFromDB(
+      req.params.id
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Single Academic Semester Find',
+      data: result,
+    });
+  }
+);
+
+export const AcademicSemesterController = {
+  insertIntoDB,
+  getAllSemester,
+  getSingleSemester,
+};
