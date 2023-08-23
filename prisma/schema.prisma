@@ -28,7 +28,7 @@ model AcademicSemester {
 //Creating academic faculty model
 model AcademicFaculty {
   id                  String               @id @default(uuid())
-  titile              String
+  title               String
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
   academicDepartments AcademicDepartment[]

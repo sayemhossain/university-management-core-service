@@ -81,8 +81,21 @@ const getSingleSemesterFromDB = async (
   return result;
 };
 
+const deleteSingleSemesterFromDB = async (
+  id: string
+): Promise<AcademicSemester | null> => {
+  const result = await prisma.academicSemester.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  return result;
+};
+
 export const AcademicSemesterService = {
   insertIntoDB,
   getAllSemesterFromDB,
   getSingleSemesterFromDB,
+  deleteSingleSemesterFromDB,
 };

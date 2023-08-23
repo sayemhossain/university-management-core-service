@@ -12,5 +12,6 @@ router.post(
 
 router.get('/:id', AcademicSemesterController.getSingleSemester);
 router.get('/', AcademicSemesterController.getAllSemester);
+router.delete('/:id', AcademicSemesterController.deleteSingleSemester);
 
 export const AcademicSemesterRoutes = router;
